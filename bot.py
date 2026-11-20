@@ -11,8 +11,11 @@ async def on_ready():
     print(f'Logged in as {bot.user}')
 
 @bot.command()
-async def hero(ctx):
-    await ctx.send('ระบบข้อมูลฮีโร่ RoV พร้อมใช้งาน!')
+async def hero(ctx, *, name: str = None):
+    if name:
+        await ctx.send(f'ข้อมูลฮีโร่ **{name}**: ค้นหาข้อมูลเชิงลึกและเทคนิคเพิ่มเติมได้ที่ https://rovlab.app')
+    else:
+        await ctx.send('กรุณาพิมพ์ชื่อฮีโร่ต่อท้ายด้วยนะครับ เช่น `!hero yorn` หรือดูข้อมูลทั้งหมดที่ https://rovlab.app')
 
 @bot.command()
 async def tier(ctx):
