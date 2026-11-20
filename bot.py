@@ -1,7 +1,7 @@
 import os
 import discord
 from discord.ext import commands
-from heroes import heroes_database  # ดึงข้อมูลมาจากไฟล์ heroes.py
+from heroes import heroes_database
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -20,24 +20,15 @@ async def hero(ctx, *, name: str = None):
         if hero_clean in heroes_database:
             h = heroes_database[hero_clean]
             msg = (
-                f"📊 **ข้อมูลฮีโร่: {hero_title} ({h['role']})**\n"
-                f"• **Win Rate:** {h['winrate']} | **Pick Rate:** {h['pickrate']}\n"
-                f"• **จุดเด่น:** {h['strength']}\n"
-                f"• **ตัวแพ้ทาง/ควรระวัง:** {h['counter']}\n"
-                f"• **ตัวชนะทางได้เปรียบ:** {h['favorable']}"
+                f"📊 **{hero_title}**\n"
+                f"• **Win Rate:** {h['winrate']}\n"
+                f"• **ตัวแพ้ทาง/ควรระวัง:** {h['counter']}"
             )
         else:
-            msg = (
-                f"📊 **ข้อมูลสรุปฮีโร่: {hero_title}**\n"
-                f"• **บทบาทในเกม:** ฮีโร่สังกัดเมต้าปัจจุบัน (ครบถ้วนทั้ง 131 ตัวละคร)\n"
-                f"• **Win Rate เฉลี่ย:** ~48.5% - 52.0%\n"
-                f"• **จุดเด่นประจำตัว:** มีสกิลคอมโบเฉพาะตัวที่ออกแบบมาเพื่อพลิกแพลงสถานการณ์ไฟต์\n"
-                f"• **ตัวแพ้ทางทั่วไป:** ระวังฮีโร่ที่มีสกิลควบคุมหมู่ (CC) และตัวโถมไฟต์ไว\n"
-                f"• **ตัวชนะทางทั่วไป:** ได้เปรียบเมื่อเจอตัวบางหรือฮีโร่ที่เดินเดี่ยวไร้การคุ้มกัน"
-            )
+            msg = f"⚠️ ไม่พบข้อมูลของฮีโร่ชื่อ **{hero_title}** กรุณาตรวจสอบการสะกดอีกครั้งครับ"
         await ctx.send(msg)
     else:
-        await ctx.send('⚠️ กรุณาพิมพ์ชื่อฮีโร่ต่อท้ายด้วยนะครับ เช่น `!hero yorn`, `!hero nakroth`, `!hero zuka`')
+        await ctx.send('⚠️ กรุณาพิมพ์ชื่อฮีโร่ต่อท้ายด้วยนะครับ เช่น `!hero yorn` หรือ `!hero nakroth`')
 
 @bot.command()
 async def tier(ctx):
@@ -45,6 +36,6 @@ async def tier(ctx):
 
 @bot.command()
 async def draft(ctx):
-    await ctx.send('⚔️ **ระบบช่วยวิเคราะห์ Pick/Ban และจัดคอมโบทีม** สำหรับโหมดจัดอันดับ')
+    await ctx.send('⚔️ **ระบบช่วยวิเคราะห์ Pick/Ban และจัดคอมโบทีม**')
 
 bot.run(os.environ['TOKEN'])
