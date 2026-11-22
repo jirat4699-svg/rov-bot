@@ -104,7 +104,31 @@ async def help(ctx):
         inline=False
     )
     await ctx.send(embed=embed)
-
+# --- คำสั่งดูข้อมูลฮีโร่รายตัว (!hero) ---
+@bot.command()
+async def hero(ctx, *, hero_name: str = None):
+    if not hero_name:
+        await ctx.send("❌ กรุณาระบุชื่อฮีโร่ด้วยครับ เช่น `!hero Nakroth`")
+        return
+    
+    hero_key = hero_name.strip().title()
+    from draft import HERO_DATA
+    
+    if hero_key in HERO_DATA:
+        data = HERO_DATA[hero_key]
+        embed = discord.Embed(
+            title=f"📊 ข้อมูลฮีโร่: {hero_key}",
+            description=(
+                f"• **ตำแหน่ง:** {data['role']}\n"
+                f"• **ระดับ Tier:** {data['tier']}\n"
+                f"• **คะแนนประเมิน:** {data['score']} คะแนน"
+            ),
+            color=discord.Color.green()
+        )
+        await ctx.send(embed=embed)
+    else:
+        await ctx.send(f"❌ ไม่พบข้อมูลของฮีโร่ `{hero_name}` ในระบบครับ")
+        
 # --- 6. เริ่มต้นการทำงาน ---
 if __name__ == "__main__":
     keep_alive()
